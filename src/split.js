@@ -1,14 +1,14 @@
 /**
- * url参数分割
+ * url参数分割.
  * @author yusangeng
  */
 
 /**
- * 将url参数分割为键值对
+ * 将url参数分割为键值对.
  *
- * @param {string} url search部分, 可以通过window.location.search取得
- * @returns {Object} url参数表
- * @export
+ * @param {string} url search部分, 可以通过window.location.search取得.
+ * @returns {Object} url参数表.
+ * @private
  */
 export default function split (searchStr) {
   const segments = searchStr.replace(/^\?/, '').split('&')

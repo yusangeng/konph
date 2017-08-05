@@ -1,5 +1,5 @@
 /**
- * 配置值读取器
+ * 配置值读取器.
  * @author yusangeng
  */
 
@@ -11,20 +11,21 @@ import split from './split'
 function noop () {}
 
 /**
- * 配置值读取器
+ * 配置值读取器.
  *
  * @class Reader
- * @export
+ * @private
  */
 export default class Reader {
   /**
-   * 构造函数
+   * 构造函数.
    * 
-   * @param {Object} globalConf 全局配置变量
-   * @param {string} url url字符串
-   * @param {Object} options 配置项读取设置
+   * @param {Object} globalConf 全局配置变量.
+   * @param {string} url url字符串.
+   * @param {Object} options 配置项读取设置.
    *
    * @memberof Reader
+   * @private
    */
   constructor(globalConf, url, options) {
     this.globalConf_ = globalConf
@@ -45,10 +46,10 @@ export default class Reader {
   }
   
   /**
-   * 读取配置项
+   * 读取配置项.
    *
-   * @param {string} key 配置项名称, 不区分大小写，两边的空格会被trim掉
-   * @returns {any} 配置项的值
+   * @param {string} key 配置项名称, 不区分大小写，两边的空格会被trim掉.
+   * @returns {any} 配置项的值.
    *
    * @memberof Reader
    * @instance
