@@ -1,0 +1,12 @@
+language: node_js
+
+node_js:
+  - "4"
+
+before_script:
+  - npm install
+
+script: npm run build
+
+notifications:
+  email: yusangeng@outlook.com
