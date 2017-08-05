@@ -13,7 +13,7 @@
     "build": "npm run build-debug && npm run build-release",
     "transpile": "cd src && \"../node_modules/.bin/babel\" ./* -d ../lib",
     "doc": "node_modules/.bin/jsdoc -r ./src -d ./doc -R ./README.md -t ./node_modules/ink-docstrap/template",
-    "prepublish": "npm test-win && npm run transpile && npm run doc"
+    "prepublish": "npm run test-win && npm run transpile && npm run doc"
   },
   "repository": {
     "type": "git",
