@@ -68,7 +68,7 @@ const helper = {
       if (isNumber(value)) {
         return value
       }
-      
+
       if (isBoolean(value)) {
         return value + 0
       }

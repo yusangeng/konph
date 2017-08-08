@@ -30,9 +30,9 @@ function konph (options, name = '__Konph') {
   const nameIsStr = isString(name)
   const globalConf = (nameIsStr ? g[name] : name.global) || {}
   const url = (nameIsStr ? getSearch() : name.url) || ''
-  
+
   const reader = new Reader(globalConf, url, opt)
-  
+
   return Object.keys(opt).map(key => key.trim().toLowerCase()).map(key => {
     return {
       key: key,

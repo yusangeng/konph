@@ -6,7 +6,7 @@ import konph from '../src/konph'
 
 chai.should()
 
-function createConf(HOST, G, URL) {
+function createConf (HOST, G, URL) {
   const config = konph({
     'is-daily': {
       defaultValue: true,
@@ -67,7 +67,7 @@ function createConf(HOST, G, URL) {
         if (ctx['is-dev'] && /\d$/.test(vv)) {
           return vv + '.dev'
         }
-        
+
         return vv
       }
     },
@@ -81,11 +81,11 @@ function createConf(HOST, G, URL) {
     global: G,
     url: URL
   })
-  
+
   return config
 }
 
-describe('konph', _ => { 
+describe('konph', _ => {
   describe('#konph', _ => {
     it('basic usage.', done => {
       const cf = createConf('prod.konph.com', {
@@ -96,7 +96,7 @@ describe('konph', _ => {
         'rpc-ver': '1.2.3',
         'rpc-use-tunnel': true
       }, '?is-dev=true&rpc-timeout=3001')
-      
+
       cf['is-daily'].should.to.be.true
       cf['is-dev'].should.to.be.true
       cf['rpc-timeout'].should.to.be.equal(3001)

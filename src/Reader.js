@@ -19,7 +19,7 @@ function noop () {}
 export default class Reader {
   /**
    * 构造函数.
-   * 
+   *
    * @param {Object} globalConf 全局配置变量.
    * @param {string} url url字符串.
    * @param {Object} options 配置项读取设置.
@@ -27,11 +27,11 @@ export default class Reader {
    * @memberof Reader
    * @private
    */
-  constructor(globalConf, url, options) {
+  constructor (globalConf, url, options) {
     this.globalConf_ = globalConf
     this.urlConf_ = split(url)
     this.options_ = options
-    
+
     const cache = this.cache_ = Object.create(null)
     const fitContext = this.fitContext_ = Object.create(null)
 
@@ -44,7 +44,7 @@ export default class Reader {
       })
     })
   }
-  
+
   /**
    * 读取配置项.
    *
@@ -57,14 +57,14 @@ export default class Reader {
   item (key) {
     const kk = key.trim().toLowerCase()
     const cacheValue = this.cache_[kk]
-    
+
     if (cacheValue !== noop) {
       return cacheValue
     }
 
     // 当前项的配置
     const option = this.options_[kk]
-    
+
     if (!option) {
       throw new Error(`Bad key: ${kk}.`)
     }
@@ -112,4 +112,4 @@ export default class Reader {
 
     return value
   }
-} 
+}

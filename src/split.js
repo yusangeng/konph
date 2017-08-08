@@ -23,7 +23,7 @@ export default function split (searchStr) {
     }
 
     value = decodeURIComponent(value || '').trim() // value忽略两端空格
-    
+
     return { key, value }
   }).filter(el => !!el).reduce((prev, el) => {
     prev[el.key] = el.value

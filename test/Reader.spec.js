@@ -14,7 +14,7 @@ describe('Reader', _ => {
       done()
     })
   })
-  
+
   describe('#item', _ => {
     it('basic usage.', done => {
       const rd = new Reader({
@@ -25,15 +25,15 @@ describe('Reader', _ => {
           def: 0,
           fit: helper.fit.number
         },
-        
+
         b: {
           fit: helper.fit.boolean
         }
       })
-      
+
       rd.item('a').should.to.be.equal(3)
       rd.item('b').should.to.be.equal(false)
-      
+
       done()
     })
 
@@ -53,22 +53,22 @@ describe('Reader', _ => {
             return ret
           }
         },
-        
+
         b: {
           fit: helper.fit.boolean
         },
-        
+
         c: {
-           fit: helper.fit.number
+          fit: helper.fit.number
         }
       })
-      
+
       rd.item('a').should.to.be.equal(7)
       rd.item('b').should.to.be.equal(false)
-      
+
       done()
     })
-    
+
     it('deps via this.', done => {
       const rd = new Reader({
         A: 1,
@@ -85,22 +85,22 @@ describe('Reader', _ => {
             return ret
           }
         },
-        
+
         b: {
           fit: helper.fit.boolean
         },
-        
+
         c: {
-           fit: helper.fit.number
+          fit: helper.fit.number
         }
       })
-      
+
       rd.item('a').should.to.be.equal(7)
       rd.item('b').should.to.be.equal(false)
-      
+
       done()
     })
-    
+
     it('deps via fitContext.', done => {
       const rd = new Reader({
         A: 1,
@@ -117,19 +117,19 @@ describe('Reader', _ => {
             return ret
           }
         },
-        
+
         b: {
           fit: helper.fit.boolean
         },
-        
+
         c: {
-           fit: helper.fit.number
+          fit: helper.fit.number
         }
       })
-      
+
       rd.item('a').should.to.be.equal(7)
       rd.item('b').should.to.be.equal(false)
-      
+
       done()
     })
   })
