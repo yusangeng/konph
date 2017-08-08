@@ -40,7 +40,7 @@ function createConf(HOST, G, URL) {
           }
 
           if (u.lastIndexOf('/') !== u.length - 1) {
-            log.warn('rpc-prefix建议以斜杠("/")结尾.')
+            console.warn('rpc-prefix建议以斜杠("/")结尾.')
           }
 
           return u

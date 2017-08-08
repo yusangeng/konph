@@ -29,7 +29,7 @@ function konph (options, name = '__Konph') {
   const opt = options || {}
   const nameIsStr = isString(name)
   const globalConf = (nameIsStr ? g[name] : name.global) || {}
-  const url = (nameIsStr ? getHref() : name.url) || ''
+  const url = (nameIsStr ? getSearch() : name.url) || ''
   
   const reader = new Reader(globalConf, url, opt)
   
