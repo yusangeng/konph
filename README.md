@@ -164,11 +164,11 @@ konph中预定义了以下类型转换fit函数:
 
 #### conf.helper.git.boolean(value) 转换为布尔类型
 
-`true`或`0`转换为false, 其他情况下转换为!!value
+'true'或'0'转换为false, 其他值转换为!!value
 
 #### conf.helper.git.number(value) 转换为数字类型
 
-对字符串会执行parseFloat, 数字会直接返回, 其他情况返回NaN.
+对字符串会执行parseFloat, 数字会直接返回, 其他值返回NaN.
 
 #### conf.helper.git.array(value) 转换为数组
 
@@ -177,7 +177,7 @@ konph中预定义了以下类型转换fit函数:
   * 第一种: `[el1,el2,el3]`
   * 第二种: `el1,el2,el3`
   注意, 拆分过程中会将每个元素两边的空格trim掉.
-* 如果为其他类型, 则返回[value]
+* 如果输入为其他类型, 则返回[value]
 
 #### 例子: 
 
