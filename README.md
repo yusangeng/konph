@@ -188,7 +188,7 @@ import conf from 'konph'
 
 const config = conf({
   foobar: {
-    fit: value => !!value
+    fit: conf.helper.git.boolean
   }
 })
 ```
