@@ -162,15 +162,15 @@ const config = conf({/*...*/}, 'MyConfig')
 
 konph中预定义了以下类型转换fit函数:
 
-#### conf.helper.git.boolean(value) 转换为布尔类型
+#### conf.helper.fit.boolean(value) 转换为布尔类型
 
 'true'或'0'转换为false, 其他值转换为!!value
 
-#### conf.helper.git.number(value) 转换为数字类型
+#### conf.helper.fit.number(value) 转换为数字类型
 
 对字符串会执行parseFloat, 数字会直接返回, 其他值返回NaN.
 
-#### conf.helper.git.array(value) 转换为数组
+#### conf.helper.fit.array(value) 转换为数组
 
 * 如果输入为数组则直接返回.
 * 如果输入为字符串, 则拆分为数组返回.目前支持两种拆分方式: 
@@ -188,7 +188,7 @@ import conf from 'konph'
 
 const config = conf({
   foobar: {
-    fit: conf.helper.git.boolean
+    fit: conf.helper.fit.boolean
   }
 })
 ```
