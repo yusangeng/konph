@@ -53,4 +53,15 @@ function konph (options, name = '__Konph') {
  */
 konph.helper = helper
 
+/**
+ * 私有配置生成器
+ * @namespace konph.private
+ */
+konph.private = function (value) {
+  return {
+    __konph_private_item__: true,
+    value: value
+  }
+}
+
 export default konph

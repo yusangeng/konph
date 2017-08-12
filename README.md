@@ -109,6 +109,18 @@ const config = conf({
 })
 ```
 
+### 私有配置
+
+``` js
+import conf from 'konph'
+
+const config = conf({
+  // 私有配置, 不会被全局变量或者url参数覆盖
+  'some-private-item': konph.private('I\'m a private config item.')
+})
+```
+
+
 ### 写配置
 
 配置有两种写入途径: 

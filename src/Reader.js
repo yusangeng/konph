@@ -59,6 +59,7 @@ export default class Reader {
     const cacheValue = this.cache_[kk]
 
     if (cacheValue !== noop) {
+      // 命中缓存
       return cacheValue
     }
 
@@ -67,6 +68,11 @@ export default class Reader {
 
     if (!option) {
       throw new Error(`Bad key: ${kk}.`)
+    }
+
+    if (option.__konph_private_item__) {
+      // 私有配置
+      return option.value
     }
 
     const {def, defaultValue, fit, deps} = option
