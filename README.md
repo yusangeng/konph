@@ -176,7 +176,7 @@ konph中预定义了以下类型转换fit函数:
 
 #### conf.helper.fit.boolean(value) 转换为布尔类型
 
-'true'或'0'转换为false, 其他值转换为!!value
+'false'或'0'转换为false, 其他值转换为!!value
 
 #### conf.helper.fit.number(value) 转换为数字类型
 
