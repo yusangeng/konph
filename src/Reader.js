@@ -87,7 +87,7 @@ export default class Reader {
 
     if (isUndefined(value)) {
       // 默认值优先级最低
-      value = def || defaultValue // defaultValue是def的老写法
+      value = isUndefined(def) ? defaultValue : def // defaultValue是def的老写法
     }
 
     if (isFunction(fit)) {
