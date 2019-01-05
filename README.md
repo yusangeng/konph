@@ -1,8 +1,6 @@
-# konph | A Front-end configuration tool.
+# konph | 前端应用配置工具
 
-[![Build Status](https://travis-ci.org/yusangeng/konph.svg?branch=master)](https://travis-ci.org/yusangeng/konph) [![Standard - JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
-
-[![Npm Info](https://nodei.co/npm/konph.png?compact=true)](https://www.npmjs.com/package/konph)
+[![Build Status](https://travis-ci.org/yusangeng/konph.svg?branch=master)](https://travis-ci.org/yusangeng/konph) [![Standard - JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) [![Npm Info](https://badge.fury.io/js/konph.svg)](https://www.npmjs.com/package/konph)
 
 ## 综述
 
