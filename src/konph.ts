@@ -36,7 +36,8 @@ function getSearch () : string {
  * @function
  */
 function konph (options: KonphOptions = kv(),
-  name: string | KonphInitData = '__Konph') : KVMap {
+  name?: string | KonphInitData) : KVMap {
+  name = name || '__Konph'
   let globalConf
   let url
 
