@@ -69,7 +69,7 @@ function prv (value: any) : KonphPrivateItem {
 type FPrivate = (value: any) => KonphPrivateItem
 
 type Konph = {
-  (options: KonphOptions, name: string | KonphInitData): KVMap,
+  (options: KonphOptions, name?: string | KonphInitData): KVMap,
   helper: KVMap
   private: FPrivate
 }
