@@ -1,17 +1,15 @@
 /* global describe it */
-
-import 'babel-polyfill'
 import chai from 'chai'
 import helper from '../src/helper'
 
 chai.should()
 
-describe('helper.fit', _ => {
+describe('helper.fit', () => {
   const fit = helper.fit
 
-  describe('#boolean', _ => {
+  describe('#boolean', () => {
     it('should NOT throw error.', done => {
-      fit.boolean()
+      fit.boolean(void 0)
       fit.boolean(null)
       done()
     })
@@ -27,15 +25,15 @@ describe('helper.fit', _ => {
       fit.boolean(0).should.to.be.equal(false)
       fit.boolean('false').should.to.be.equal(false)
       fit.boolean('0').should.to.be.equal(false)
-      fit.boolean().should.to.be.equal(false)
+      fit.boolean(void 0).should.to.be.equal(false)
       fit.boolean(null).should.to.be.equal(false)
       done()
     })
   })
 
-  describe('#number', _ => {
+  describe('#number', () => {
     it('should NOT throw error.', done => {
-      fit.number()
+      fit.number(void 0)
       fit.number(null)
       done()
     })
@@ -49,7 +47,7 @@ describe('helper.fit', _ => {
     })
 
     it('should be NaN.', done => {
-      isNaN(fit.number()).should.to.be.equal(true)
+      isNaN(fit.number(void 0)).should.to.be.equal(true)
       isNaN(fit.number(null)).should.to.be.equal(true)
       isNaN(fit.number({})).should.to.be.equal(true)
       isNaN(fit.number('abc')).should.to.be.equal(true)
@@ -57,15 +55,15 @@ describe('helper.fit', _ => {
     })
   })
 
-  describe('#array', _ => {
+  describe('#array', () => {
     it('should NOT throw error.', done => {
-      fit.array()
+      fit.array(void 0)
       fit.array(null)
       done()
     })
 
     it('should be []', done => {
-      fit.array().should.to.deep.equal([])
+      fit.array(void 0).should.to.deep.equal([])
       fit.array([]).should.to.deep.equal([])
       fit.array('').should.to.deep.equal([])
       fit.array('[]').should.to.deep.equal([])

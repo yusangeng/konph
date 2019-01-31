@@ -1,6 +1,7 @@
 /**
- * 导出接口
- * @author yusangeng
+ * 导出接口.
+ * 
+ * @author Y3G
  */
 
 import konph from './konph'

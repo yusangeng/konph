@@ -92,7 +92,7 @@ const config = conf({
      * 当fit使用箭头函数定义时, 因为箭头函数不支持绑定this, 所以采用另一种写法:
      * fit: (value, ctx) => `${ctx.tom} ${value} ${ctx.jerry}`
      */
-    fit: function(value) {
+    fit: function (value) {
       return `${this.tom} ${value} ${this.jerry}`
     }
   },

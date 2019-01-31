@@ -1,21 +1,20 @@
 /* global describe it */
 
-import 'babel-polyfill'
 import chai from 'chai'
 import Reader from '../src/Reader'
 import helper from '../src/helper'
 
 chai.should()
 
-describe('Reader', _ => {
-  describe('#constructor', _ => {
+describe('Reader', () => {
+  describe('#constructor', () => {
     it('should NOT throw error.', done => {
-      const rd = new Reader({}, '', {})
+      void new Reader({}, '', {})
       done()
     })
   })
 
-  describe('#item', _ => {
+  describe('#item', () => {
     it('basic usage.', done => {
       const rd = new Reader({
         A: 1,
@@ -78,10 +77,11 @@ describe('Reader', _ => {
         a: {
           def: 0,
           fit: function (value) {
-            console.log(`@@@@ value=${value}, c=${this.c}`)
+            const t = this as any
+            console.log(`@@@@ value=${value}, c=${t.c}`)
 
             let ret = helper.fit.number(value)
-            ret = ret + this.c
+            ret = ret + t.c
             return ret
           }
         },

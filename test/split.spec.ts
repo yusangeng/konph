@@ -1,13 +1,12 @@
 /* global describe it */
 
-import 'babel-polyfill'
 import chai from 'chai'
 import split from '../src/split'
 
 chai.should()
 
-describe('split', _ => {
-  describe('#split', _ => {
+describe('split', () => {
+  describe('#split', () => {
     it('should NOT throw error.', done => {
       split('?a=1&b=2&c=qwerty')
       done()

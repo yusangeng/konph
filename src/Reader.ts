@@ -1,13 +1,16 @@
 /**
  * 配置值读取器.
- * @author yusangeng
+ *
+ * @author Y3G
  */
 
 import isUndefined from 'lodash/isUndefined'
 import isFunction from 'lodash/isFunction'
-import isArray from 'lodash/isArray'
 import split from './split'
+import { KVMap, KonphOptions, KonphGlobal, KonphItem, KonphPrivateItem, kv } from './common'
 
+const { isArray } = Array
+const {  keys, defineProperty } = Object
 function noop () {}
 
 /**
@@ -17,30 +20,35 @@ function noop () {}
  * @private
  */
 export default class Reader {
+  globalConf_: KonphGlobal
+  urlConf_: KVMap
+  options_: KonphOptions
+  cache_: KVMap
+  fitContext_: KVMap
+
   /**
    * 构造函数.
    *
-   * @param {Object} globalConf 全局配置变量.
+   * @param {KonphGlobal} globalConf 全局配置变量.
    * @param {string} url url字符串.
-   * @param {Object} options 配置项读取设置.
+   * @param {KonphOptions} options 配置项读取设置.
    *
    * @memberof Reader
-   * @private
    */
-  constructor (globalConf, url, options) {
+  constructor (globalConf: KonphGlobal, url: string, options: KonphOptions) {
     this.globalConf_ = globalConf
     this.urlConf_ = split(url)
     this.options_ = options
 
-    const cache = this.cache_ = Object.create(null)
-    const fitContext = this.fitContext_ = Object.create(null)
+    const cache = this.cache_ = kv()
+    const fitContext = this.fitContext_ = kv()
 
-    Object.keys(options).forEach(key => {
+    keys(options).forEach(key => {
       const kk = key.trim().toLowerCase()
 
       cache[kk] = noop
-      Object.defineProperty(fitContext, kk, {
-        get: _ => this.item(kk)
+      defineProperty(fitContext, kk, {
+        get: () => this.item(kk)
       })
     })
   }
@@ -48,13 +56,13 @@ export default class Reader {
   /**
    * 读取配置项.
    *
-   * @param {string} key 配置项名称, 不区分大小写，两边的空格会被trim掉.
+   * @param {string} key 配置项名称(不区分大小写)，两边的空格会被trim掉.
    * @returns {any} 配置项的值.
    *
    * @memberof Reader
    * @instance
    */
-  item (key) {
+  item (key: string) : any {
     const kk = key.trim().toLowerCase()
     const cacheValue = this.cache_[kk]
 
@@ -64,18 +72,18 @@ export default class Reader {
     }
 
     // 当前项的配置
-    const option = this.options_[kk]
+    const item = this.options_[kk]
 
-    if (!option) {
+    if (!item) {
       throw new Error(`Bad key: ${kk}.`)
     }
 
-    if (option.__konph_private_item__) {
+    if ((item as KonphPrivateItem).__konph_private_item__) {
       // 私有配置
-      return option.value
+      return (item as KonphPrivateItem).value
     }
 
-    const {def, defaultValue, fit, deps} = option
+    const { def, defaultValue, fit, deps } = item as KonphItem
 
     // url参数的优先级最高
     let value = this.urlConf_[kk]
@@ -106,11 +114,11 @@ export default class Reader {
       if (depValues.length) {
         // 老写法
         // 如果填写了deps, 同时fit函数是箭头函数, 则依赖分析不可用
-        value = fit.apply(this.fitContext_, [value].concat(depValues))
+        value = fit.call(this.fitContext_, value, ...depValues)
       } else {
         // 新写法
         // 由于fit函数有通常是箭头函数, bind this无效，所以要使用第二个参数传递fitContext
-        value = fit.apply(this.fitContext_, [value].concat([this.fitContext_]))
+        value = fit.call(this.fitContext_, value, this.fitContext_)
       }
     }
 

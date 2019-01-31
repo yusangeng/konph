@@ -1,13 +1,14 @@
 /**
- * 帮助函数
- * @author yusangeng
+ * 帮助函数.
+ * 
+ * @author Y3G
  */
 
-import isString from 'lodash/isString'
 import isNumber from 'lodash/isNumber'
 import isBoolean from 'lodash/isBoolean'
-import isArray from 'lodash/isArray'
 import isUndefined from 'lodash/isUndefined'
+
+const { isArray } = Array
 
 /**
  * 帮助函数, 可以通过Konph.helper访问.
@@ -39,12 +40,17 @@ const helper = {
      * @param {any} value 输入值.
      * @returns {boolean} 转换结果.
      */
-    boolean (value) {
+    boolean (value: any) : boolean {
       if (value === 'false' || value === '0') {
         return false
       }
 
       return !!value
+    },
+
+    // 兼容老版本
+    bool (value: any) : boolean {
+      return helper.fit.boolean(value)
     },
 
     /**
@@ -55,8 +61,8 @@ const helper = {
      * @param {any} value 输入值.
      * @returns {number} 转换结果.
      */
-    number (value) {
-      if (isString(value)) {
+    number (value: any) : number {
+      if (typeof value === 'string') {
         try {
           return parseFloat(value)
         } catch (e) {
@@ -70,7 +76,7 @@ const helper = {
       }
 
       if (isBoolean(value)) {
-        return value + 0
+        return value ? 1 : 0
       }
 
       return NaN
@@ -92,7 +98,7 @@ const helper = {
      * @param {any} value 输入值.
      * @returns {Array} 转换结果.
      */
-    array (value) {
+    array (value: any) : Array<any> {
       if (isArray(value)) {
         return value
       }
@@ -101,7 +107,7 @@ const helper = {
         return []
       }
 
-      if (isString(value)) {
+      if (typeof value === 'string') {
         let v = value.trim().replace(/^\[/, '').replace(/\]$/, '').trim()
         const ret = v.split(',').map(el => el.trim()).filter(el => el !== '')
         return ret
@@ -111,8 +117,5 @@ const helper = {
     }
   }
 }
-
-// 兼容老版本
-helper.fit.bool = helper.fit.boolean
 
 export default helper

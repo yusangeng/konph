@@ -1,26 +1,26 @@
 /* global describe it */
 
-import 'babel-polyfill'
 import chai from 'chai'
 import konph from '../src/konph'
+import { KVMap } from '../src/common'
 
 chai.should()
 
-function createConf (HOST, G, URL) {
+function createConf (HOST: string, G: KVMap, URL: string) : KVMap {
   const config = konph({
     'is-daily': {
-      defaultValue: true,
+      def: true,
       fit: konph.helper.fit.bool
     },
 
     'is-dev': {
-      defaultValue: true,
+      def: true,
       fit: konph.helper.fit.bool
     },
 
     'rpc-timeout': {
-      defaultValue: 5000,
-      fit: v => {
+      def: 5000,
+      fit: (v: string) => {
         let timeout = parseInt(v)
         timeout = isNaN(timeout) ? 5000 : timeout
         return timeout
@@ -28,9 +28,9 @@ function createConf (HOST, G, URL) {
     },
 
     'rpc-prefix': {
-      defaultValue: null,
+      def: null,
 
-      fit: (v, ctx) => {
+      fit: (v: string, ctx: KVMap) => {
         if (v !== null && typeof v !== 'undefined') {
           let u = '' + v
 
@@ -46,7 +46,7 @@ function createConf (HOST, G, URL) {
           return u
         }
 
-        let host = HOST // window.location.host
+        let host: any = HOST // window.location.host
 
         if (ctx['is-daily'] ||
           host.startsWith('local.konph.com') ||
@@ -61,8 +61,8 @@ function createConf (HOST, G, URL) {
     },
 
     'rpc-ver': {
-      dafaultValue: '1.0.0',
-      fit: (v, ctx) => {
+      def: '1.0.0',
+      fit: (v: string, ctx: KVMap) => {
         const vv = '' + v
         if (ctx['is-dev'] && /\d$/.test(vv)) {
           return vv + '.dev'
@@ -73,7 +73,7 @@ function createConf (HOST, G, URL) {
     },
 
     'rpc-use-tunnel': {
-      defaultValue: false,
+      def: false,
       fit: konph.helper.fit.bool
     }
   }, {
@@ -85,8 +85,8 @@ function createConf (HOST, G, URL) {
   return config
 }
 
-describe('konph', _ => {
-  describe('#konph', _ => {
+describe('konph', () => {
+  describe('#konph', () => {
     it('basic usage.', done => {
       const cf = createConf('prod.konph.com', {
         'is-daily': true,
@@ -97,6 +97,7 @@ describe('konph', _ => {
         'rpc-use-tunnel': true
       }, '?is-dev=true&rpc-timeout=3001')
 
+      /* eslint no-unused-expressions: 0 */
       cf['is-daily'].should.to.be.true
       cf['is-dev'].should.to.be.true
       cf['rpc-timeout'].should.to.be.equal(3001)
