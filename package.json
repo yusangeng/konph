@@ -8,7 +8,7 @@
   "type-check": "tsc",
   "scripts": {
     "test": "nyc mocha --compilers ts:ts-node/register test/*.spec.ts",
-    "es5": "rm -rf ./lib && tsc --build tsconfig.json",
+    "es5": "rm -rf ./lib && tsc -p tsconfig.json",
     "prepublish": "npm run test && npm run es5"
   },
   "repository": {
