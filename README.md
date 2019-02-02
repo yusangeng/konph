@@ -13,38 +13,15 @@ konph将url参数、js全局变量、以及默认值按照优先级从高到低�
 ``` shell
 npm install konph -save
 ```
-### 网页引用
-
-index.js:
-``` html
-<!DOCTYPE html>
-<html>
-  <head>
-    <script src="path/to/konph.js"></script>
-    <script>
-    window.__Konph = {
-      foo: 1,
-      bar: 2
-    }
-    </script>
-    <script src="./index.js"></script>
-  </head>
-</html>
-```
-
-index.js:
-``` js
-var conf = Konph({...})
-```
 
 ## 使用
 
 ### 读取配置
 
 ``` js
-import conf from 'konph'
+import konph from 'konph'
 
-const config = conf({
+const config = konph({
   // 要读取的配置字段名, 不分大小写
   'some-conf-item': {
     // 读取设置, 后面会详细介绍
@@ -56,9 +33,9 @@ const config = conf({
 ### 读取配置时设置默认值
 
 ``` js
-import conf from 'konph'
+import konph from 'konph'
 
-const config = conf({
+const config = konph({
   'some-conf-item': {
     // 如果实际some-conf-item没有配置, 或者配置值是undefined, 则会用def代替
     def: 'foobar'
@@ -69,9 +46,9 @@ const config = conf({
 ### 读取配置时设置后处理函数
 
 ``` js
-import conf from 'konph'
+import konph from 'konph'
 
-const config = conf({
+const config = konph({
   'some-conf-item': {
     // some-conf-item的配置值(**包括默认值**)会先经过fit函数处理, 再输出给返回值
     fit: value => 'Value: ' + value
@@ -82,9 +59,9 @@ const config = conf({
 ### 后处理函数中依赖其他配置项
 
 ``` js
-import conf from 'konph'
+import konph from 'konph'
 
-const config = conf({
+const config = konph({
   love: {
     def: 'loves',
     /**
@@ -110,9 +87,9 @@ const config = conf({
 ### 私有配置
 
 ``` js
-import conf from 'konph'
+import konph from 'konph'
 
-const config = conf({
+const config = konph({
   // 私有配置, 不会被全局变量或者url参数覆盖
   'some-private-item': konph.private('I\'m a private config item.')
 })
@@ -159,9 +136,9 @@ window.MyConfig = {
 
 js:
 ``` js
-import conf from 'konph'
+import konph from 'konph'
 
-const config = conf({/*...*/}, 'MyConfig')
+const config = konph({/*...*/}, 'MyConfig')
 ```
 
 ## Tips
@@ -202,3 +179,5 @@ const config = conf({
   }
 })
 ```
+
+
