@@ -149,15 +149,15 @@ const config = konph({/*...*/}, 'MyConfig')
 
 konph中预定义了以下类型转换fit函数:
 
-#### conf.helper.fit.boolean(value) 转换为布尔类型
+#### konph.helper.fit.boolean(value) 转换为布尔类型
 
 'false'或'0'转换为false, 其他值转换为!!value
 
-#### conf.helper.fit.number(value) 转换为数字类型
+#### konph.helper.fit.number(value) 转换为数字类型
 
 对字符串会执行parseFloat, 数字会直接返回, 其他值返回NaN.
 
-#### conf.helper.fit.array(value) 转换为数组
+#### konph.helper.fit.array(value) 转换为数组
 
 * 如果输入为数组则直接返回.
 * 如果输入为字符串, 则拆分为数组返回.目前支持两种拆分方式: 
@@ -171,13 +171,36 @@ konph中预定义了以下类型转换fit函数:
 假设我们想定义一个boolean类型, 可以如下编写代码: 
 
 ``` js
-import conf from 'konph'
+import konph from 'konph'
 
-const config = conf({
+const config = konph({
   foobar: {
-    fit: conf.helper.fit.boolean
+    fit: konph.helper.fit.boolean
   }
 })
 ```
 
+### 类型安全 & 类型推导
 
+konph使用typescript开发, 通过载入与npm包一起发布的d.ts文件, 你可以获得一定程度上安全访问配置项的能力.
+
+简而言之, konph函数的返回值有哪些字段可以被访问, 取决于入参KonphOptions<T>有哪些字段, 其中T是一个由实际options逆推得出的虚拟类型.
+
+例如:
+
+``` ts
+import konph from 'konph'
+
+const config = konph({
+  foo: {
+    def: 1
+  },
+  bar: {
+    def: 2
+  }
+})
+
+console.log(config.baz) // TSError!
+```
+
+同时, 为了简化配置, 我们没有使用类型系统校验字段的值, 只要是可以访问的字段, 其值的类型声明都是any.
