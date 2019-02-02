@@ -7,7 +7,7 @@
   "types": "lib/",
   "type-check": "tsc",
   "scripts": {
-    "test": "nyc mocha --compilers ts:ts-node/register test/*.spec.ts",
+    "test": "nyc mocha --require ts-node/register test/*.spec.ts",
     "coverage": "nyc report --reporter=lcov",
     "es5": "rm -rf ./lib && tsc -p tsconfig.json",
     "prepublish": "npm run test && npm run es5",
