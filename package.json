@@ -40,7 +40,8 @@
     "typescript": "^3.2.4"
   },
   "dependencies": {
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.4",
+    "tslib": "^1.9.3"
   },
   "nyc": {
     "extension": [

@@ -2,7 +2,7 @@
 
 import chai from 'chai'
 import konph from '../src/konph'
-import { KVMap } from '../src/common'
+import { KVMap } from '../src/types'
 
 chai.should()
 

@@ -7,7 +7,7 @@
 import isUndefined from 'lodash/isUndefined'
 import isFunction from 'lodash/isFunction'
 import split from './split'
-import { KVMap, KonphOptions, KonphGlobal, KonphItem, KonphPrivateItem, kv } from './common'
+import { KVMap, KonphOptions, KonphGlobal, KonphItem, KonphPrivateItem } from './types'
 
 const { isArray } = Array
 const {  keys, defineProperty } = Object
@@ -19,12 +19,12 @@ function noop () {}
  * @class Reader
  * @private
  */
-export default class Reader {
-  globalConf_: KonphGlobal
-  urlConf_: KVMap
-  options_: KonphOptions
-  cache_: KVMap
-  fitContext_: KVMap
+export default class Reader<T extends KVMap> {
+  globalConf_: KonphGlobal<T>
+  urlConf_: KonphGlobal<T>
+  options_: KonphOptions<T>
+  cache_: KonphGlobal<T>
+  fitContext_: KonphGlobal<T>
 
   /**
    * 构造函数.
@@ -35,13 +35,13 @@ export default class Reader {
    *
    * @memberof Reader
    */
-  constructor (globalConf: KonphGlobal, url: string, options: KonphOptions) {
+  constructor (globalConf: KonphGlobal<T>, url: string, options: KonphOptions<T>) {
     this.globalConf_ = globalConf
-    this.urlConf_ = split(url)
+    this.urlConf_ = split<T>(url)
     this.options_ = options
 
-    const cache = this.cache_ = kv()
-    const fitContext = this.fitContext_ = kv()
+    const cache: KVMap = this.cache_ = {}
+    const fitContext = this.fitContext_ = {}
 
     keys(options).forEach(key => {
       const kk = key.trim().toLowerCase()

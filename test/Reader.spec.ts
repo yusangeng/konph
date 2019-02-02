@@ -17,7 +17,7 @@ describe('Reader', () => {
   describe('#item', () => {
     it('basic usage.', done => {
       const rd = new Reader({
-        A: 1,
+        a: 1,
         b: true
       }, '?a=3&b=0', {
         a: {
@@ -38,7 +38,7 @@ describe('Reader', () => {
 
     it('deps old.', done => {
       const rd = new Reader({
-        A: 1,
+        a: 1,
         b: true,
         c: 4
       }, '?a=3&b=0', {
@@ -70,7 +70,7 @@ describe('Reader', () => {
 
     it('deps via this.', done => {
       const rd = new Reader({
-        A: 1,
+        a: 1,
         b: true,
         c: 4
       }, '?a=3&b=0', {
@@ -103,7 +103,7 @@ describe('Reader', () => {
 
     it('deps via fitContext.', done => {
       const rd = new Reader({
-        A: 1,
+        a: 1,
         b: true,
         c: 4
       }, '?a=3&b=0', {

@@ -4,7 +4,7 @@
  * @author Y3G
  */
 
-import { KVMap } from './common'
+import { KonphGlobal, KVMap } from './types'
 
 /**
  * 将url参数分割为键值对.
@@ -13,7 +13,7 @@ import { KVMap } from './common'
  * @returns {KVMap} url参数表.
  * @private
  */
-export default function split (searchStr: string) : KVMap {
+export default function split<T extends KVMap> (searchStr: string) : KonphGlobal<T> {
   const segments = searchStr.replace(/^\?/, '').split('&')
 
   return segments.map(el => {
@@ -34,5 +34,5 @@ export default function split (searchStr: string) : KVMap {
     }
 
     return prev
-  }, {} as KVMap)
+  }, {} as KonphGlobal<T>)
 }

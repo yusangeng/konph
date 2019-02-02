@@ -6,14 +6,8 @@
 
 import Reader from './Reader'
 import helper from './helper'
-import { g, KVMap, KonphOptions, KonphGlobal, KonphPrivateItem, kv } from './common'
-
-type KonphInitData = {
-  url: string,
-  global: KonphGlobal
-}
-
-type FKonph = (options: KonphOptions, name: string | KonphInitData) => KVMap
+import { KVMap, KonphInitData, KonphPrivateItem, KonphOptions, KonphResult, FPrivate, Konph } from './types'
+import g from './global'
 
 function getSearch () : string {
   try {
@@ -27,16 +21,15 @@ function getSearch () : string {
 /**
  * 读取配置数据.
  *
- * @param {KonphOptions} options 读取设置, 键为感兴趣的配置字段名(不区分大小写, 两边的空格会被trim掉),
+ * @param {KonphOptions<T>} options 读取设置, 键为感兴趣的配置字段名(不区分大小写, 两边的空格会被trim掉),
  *   值为相应的读取配置, 支持fit, deps, defaultValue, 具体见README.
- * @param {string|KonphInitData} name 全局配置变量名, 默认为`__Konph`,
+ * @param {string|KonphInitData<T>} name 全局配置变量名, 默认为`__Konph`,
  *   如果传入一个对象, 则不读取全局变量和url参数,
  *   而是直接读传入对象的url和global字段, 用来在非浏览器环境中测试.
- * @returns {KVMap} 配置读取结果, 格式为键值对.
+ * @returns {KonphResult<T>} 配置读取结果, 格式为键值对.
  * @function
  */
-function konph (options: KonphOptions = kv(),
-  name?: string | KonphInitData) : KVMap {
+function konph<T extends KVMap> (options: KonphOptions<T>, name?: string | KonphInitData<T>) : KonphResult<T> {
   name = name || '__Konph'
   let globalConf
   let url
@@ -56,7 +49,7 @@ function konph (options: KonphOptions = kv(),
   }).reduce((prev, el) => {
     prev[el.key] = el.value
     return prev
-  }, {} as KVMap)
+  }, {} as KonphResult<T>)
 }
 
 function prv (value: any) : KonphPrivateItem {
@@ -64,14 +57,6 @@ function prv (value: any) : KonphPrivateItem {
     __konph_private_item__: true,
     value: value
   }
-}
-
-type FPrivate = (value: any) => KonphPrivateItem
-
-type Konph = {
-  (options: KonphOptions, name?: string | KonphInitData): KVMap,
-  helper: KVMap
-  private: FPrivate
 }
 
 const k: Konph = (() => {
@@ -84,4 +69,3 @@ const k: Konph = (() => {
 })()
 
 export default k
-
