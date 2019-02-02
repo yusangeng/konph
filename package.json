@@ -11,7 +11,7 @@
     "coverage": "nyc report --reporter=lcov",
     "es5": "rm -rf ./lib && tsc -p tsconfig.json",
     "prepublish": "npm run test && npm run es5",
-    "ci": "npm run test && npm run coverage && cat ./coverage/lcov.info | coveralls"
+    "ci": "npm run test && npm run coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
   "repository": {
     "type": "git",
@@ -31,6 +31,7 @@
     "@types/mocha": "^5.2.5",
     "@types/node": "^10.12.19",
     "chai": "^4.2.0",
+    "coveralls": "^3.0.2",
     "istanbul": "^0.4.5",
     "mocha": "^5.2.0",
     "nyc": "^13.1.0",
