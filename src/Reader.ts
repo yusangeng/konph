@@ -20,11 +20,11 @@ function noop () {}
  * @private
  */
 export default class Reader<T extends KVMap> {
-  globalConf_: KonphGlobal<T>
-  urlConf_: KonphGlobal<T>
-  options_: KonphOptions<T>
-  cache_: KonphGlobal<T>
-  fitContext_: KonphGlobal<T>
+  private globalConf_: KonphGlobal<T>
+  private urlConf_: KonphGlobal<T>
+  private options_: KonphOptions<T>
+  private cache_: KonphGlobal<T>
+  private fitContext_: KonphGlobal<T>
 
   /**
    * 构造函数.
