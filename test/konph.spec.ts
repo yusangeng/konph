@@ -8,6 +8,7 @@ chai.should()
 
 function createConf (HOST: string, G: KVMap, URL: string) : KVMap {
   const config = konph({
+    'is-private': konph.private(123),
     'is-daily': {
       def: true,
       fit: konph.helper.fit.bool
@@ -28,7 +29,7 @@ function createConf (HOST: string, G: KVMap, URL: string) : KVMap {
     },
 
     'rpc-prefix': {
-      def: null,
+      def: '',
 
       fit: (v: string, ctx: KVMap) => {
         if (v !== null && typeof v !== 'undefined') {
@@ -80,9 +81,9 @@ function createConf (HOST: string, G: KVMap, URL: string) : KVMap {
     // mock配置
     global: G,
     url: URL
-  })
+  } as any)
 
-  return config
+  return config as KVMap
 }
 
 describe('konph', () => {
@@ -98,6 +99,7 @@ describe('konph', () => {
       }, '?is-dev=true&rpc-timeout=3001')
 
       /* eslint no-unused-expressions: 0 */
+      cf['is-private'].should.to.be.eq(123)
       cf['is-daily'].should.to.be.true
       cf['is-dev'].should.to.be.true
       cf['rpc-timeout'].should.to.be.equal(3001)

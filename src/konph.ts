@@ -6,7 +6,7 @@
 
 import Reader from './Reader'
 import helper from './helper'
-import { KVMap, KonphInitData, KonphPrivateItem, KonphOptions, KonphResult, Konph } from './types'
+import { HasOnlyStringKey, KonphInitData, KonphPrivateItem, KonphOptions, KonphResult, FKonph } from './types'
 import g from './global'
 
 function getSearch () : string {
@@ -29,7 +29,8 @@ function getSearch () : string {
  * @returns {KonphResult<T>} 配置读取结果, 格式为键值对.
  * @function
  */
-function konph<T extends KVMap> (options: KonphOptions<T>, name?: string | KonphInitData<T>) : KonphResult<T> {
+function getKonph<T extends HasOnlyStringKey<T>> (options: KonphOptions<T>,
+  name?: string | KonphInitData<T>) : KonphResult<T> {
   name = name || '__Konph'
   let globalConf
   let url
@@ -45,22 +46,23 @@ function konph<T extends KVMap> (options: KonphOptions<T>, name?: string | Konph
   const reader = new Reader(globalConf, url, options)
 
   return Object.keys(options).map(key => key.trim().toLowerCase()).map(key => {
-    return { key, value: reader.item(key) }
+    return { key, value: reader.item(key as keyof T) }
   }).reduce((prev, el) => {
-    prev[el.key] = el.value
+    // fixme
+    (prev as any)[el.key] = el.value
     return prev
   }, {} as KonphResult<T>)
 }
 
-function prv (value: any) : KonphPrivateItem {
+const prv = <T> (value: T) : KonphPrivateItem<T> => {
   return {
     __konph_private_item__: true,
-    value: value
+    value
   }
 }
 
-const k: Konph = (() => {
-  const k: any = konph
+const konph: FKonph = (() => {
+  const k: any = getKonph
 
   k.helper = helper
   k.private = prv
@@ -68,4 +70,4 @@ const k: Konph = (() => {
   return k
 })()
 
-export default k
+export default konph

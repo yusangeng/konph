@@ -3,6 +3,7 @@
 import chai from 'chai'
 import Reader from '../src/Reader'
 import helper from '../src/helper'
+import { KVMap } from '../src/types'
 
 chai.should()
 
@@ -45,7 +46,7 @@ describe('Reader', () => {
         a: {
           def: 0,
           deps: ['c'],
-          fit: (value, c) => {
+          fit: (value: any, c: number) => {
             console.log(`@@@@ value=${value}, c=${c}`)
             let ret = helper.fit.number(value)
             ret = ret + c
@@ -76,7 +77,7 @@ describe('Reader', () => {
       }, '?a=3&b=0', {
         a: {
           def: 0,
-          fit: function (value) {
+          fit: function (value: any) {
             const t = this as any
             console.log(`@@@@ value=${value}, c=${t.c}`)
 
@@ -109,7 +110,7 @@ describe('Reader', () => {
       }, '?a=3&b=0', {
         a: {
           def: 0,
-          fit: (value, ctx) => {
+          fit: (value: any, ctx: KVMap) => {
             console.log(`@@@@ value=${value}, c=${ctx.c}`)
 
             let ret = helper.fit.number(value)
