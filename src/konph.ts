@@ -6,7 +6,7 @@
 
 import Reader from './Reader'
 import helper from './helper'
-import { KVMap, KonphInitData, KonphPrivateItem, KonphOptions, KonphResult, FPrivate, Konph } from './types'
+import { KVMap, KonphInitData, KonphPrivateItem, KonphOptions, KonphResult, Konph } from './types'
 import g from './global'
 
 function getSearch () : string {
