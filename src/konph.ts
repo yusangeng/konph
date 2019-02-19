@@ -31,9 +31,12 @@ function getSearch () : string {
  */
 function getKonph<T extends HasOnlyStringKey<T>> (options: KonphOptions<T>,
   name?: string | KonphInitData<T>) : KonphResult<T> {
-  name = name || '__Konph'
   let globalConf
   let url
+
+  if (!name || (typeof name === 'string' && !g[name])) {
+    name = '__Konph'
+  }
 
   if (typeof name === 'string') {
     globalConf = g[name] || {}
