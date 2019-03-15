@@ -1,62 +1,60 @@
-# konph | 前端应用配置工具
+# konph
 
 [![TypeScript](https://img.shields.io/badge/lang-typescript-blue.svg)](https://www.tslang.cn/) [![Build Status](https://travis-ci.org/yusangeng/konph.svg?branch=master)](https://travis-ci.org/yusangeng/konph) [![Coverage Status](https://coveralls.io/repos/github/yusangeng/konph/badge.svg?branch=master)](https://coveralls.io/github/yusangeng/konph?branch=master) [![Npm Package Info](https://badge.fury.io/js/konph.svg)](https://www.npmjs.com/package/konph) [![Downloads](https://img.shields.io/npm/dw/konph.svg?style=flat)](https://www.npmjs.com/package/konph)
 
-## 综述
+## Abstract
 
-konph是一个简易轻量的Web前端配置读取工具, 用来在网页中读取前端全局配置项.
+Konph is an easy-to-use front-end configuration reader, which is used to read global configuration in web page.
 
-konph将url参数、js全局变量、以及默认值按照优先级从高到低统一起来, 同名配置项, 高优先级配置值会覆盖低优先级配置值.
+Konph unifies url parameters, js global variables, and hard-coded default values by priority from high to low. With the same key, the high priority configuration value overrides the low priority configuration value.
 
-## 安装
+## Install
 
 ``` shell
 npm install konph -save
 ```
 
-## 使用
+## Usage
 
-### 读取配置
+### Basic
 
 ``` js
 import konph from 'konph'
 
 const config = konph({
-  // 要读取的配置字段名, 不分大小写
-  'some-conf-item': {
-    // 读取设置, 后面会详细介绍
-  },
+  // Configuration item, the key is case-insensitive.
+  'some-conf-item': {},
   'some-other-conf-item': {}
 })
 ```
 
-### 读取配置时设置默认值
+### Default value
 
 ``` js
 import konph from 'konph'
 
 const config = konph({
   'some-conf-item': {
-    // 如果实际some-conf-item没有配置, 或者配置值是undefined, 则会用def代替
+    // Default item value.
     def: 'foobar'
   }
 })
 ```
 
-### 读取配置时设置后处理函数
+### Postprocessor
 
 ``` js
 import konph from 'konph'
 
 const config = konph({
   'some-conf-item': {
-    // some-conf-item的配置值(**包括默认值**)会先经过fit函数处理, 再输出给返回值
+    // Postprocessor function, default value is also passed into postprocessor.
     fit: value => 'Value: ' + value
   }
 })
 ```
 
-### 后处理函数中依赖其他配置项
+### Dependence of Postprocessor
 
 ``` js
 import konph from 'konph'
@@ -84,19 +82,18 @@ const config = konph({
 })
 ```
 
-### 私有配置
+### Private Item
 
 ``` js
 import konph from 'konph'
 
 const config = konph({
-  // 私有配置, 不会被全局变量或者url参数覆盖
+  // Private item, which would not be overridden by url parameters or global variables.
   'some-private-item': konph.private('I\'m a private config item.')
 })
 ```
 
-
-### 写配置
+### Writing Configuration
 
 配置有两种写入途径: 
 
@@ -105,13 +102,13 @@ const config = konph({
 
 其中, url参数的优先级高于全局变量.
 
-### url参数
+#### Using URL Parameter
 
 ```
 http://foobar.com?some-item=1&some-other-item=2
 ```
 
-### 全局变量
+#### Using Global Variable
 
 ``` html
 <script>
@@ -122,7 +119,7 @@ window.__Konph = {
 </script>
 ```
 
-### 自定义全局变量名
+#### Using Custom Global Variable Name
 
 html:
 ``` html
@@ -143,21 +140,21 @@ const config = konph({/*...*/}, 'MyConfig')
 
 ## Tips
 
-### 类型转换
+### Type Conversion
 
 由于url参数总是string类型, 如果想定义其他类型配置值, 需要在fit函数中转型.
 
 konph中预定义了以下类型转换fit函数:
 
-#### konph.helper.fit.boolean(value) 转换为布尔类型
+#### konph.helper.fit.boolean
 
 'false'或'0'转换为false, 其他值转换为!!value
 
-#### konph.helper.fit.number(value) 转换为数字类型
+#### konph.helper.fit.number
 
 对字符串会执行parseFloat, 数字会直接返回, 其他值返回NaN.
 
-#### konph.helper.fit.array(value) 转换为数组
+#### konph.helper.fit.array
 
 * 如果输入为数组则直接返回.
 * 如果输入为字符串, 则拆分为数组返回.目前支持两种拆分方式: 
@@ -166,7 +163,7 @@ konph中预定义了以下类型转换fit函数:
   注意, 拆分过程中会将每个元素两边的空格trim掉.
 * 如果输入为其他类型, 则返回[value]
 
-#### 例子: 
+#### Example 
 
 假设我们想定义一个boolean类型, 可以如下编写代码: 
 
@@ -180,7 +177,7 @@ const config = konph({
 })
 ```
 
-### 类型安全 & 类型推导
+## Typescript
 
 konph使用typescript开发, 通过载入与npm包一起发布的d.ts文件, 你可以获得一定程度上安全访问配置项的能力.
 
