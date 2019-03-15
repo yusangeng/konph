@@ -1,7 +1,7 @@
 {
   "name": "konph",
   "version": "1.0.5",
-  "description": "A Front-end configuration tool.",
+  "description": "Front-end configuration reader.",
   "main": "lib/index.js",
   "jsnext:main": "src/index.js",
   "types": "lib/",
