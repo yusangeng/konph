@@ -1,12 +1,13 @@
 {
   "name": "konph",
-  "version": "1.0.6",
+  "version": "2.0.0",
   "description": "Front-end configuration reader.",
   "main": "lib/index.js",
   "jsnext:main": "src/index.js",
   "types": "lib/",
   "type-check": "tsc",
   "scripts": {
+    "lint": "eslint --fix ./src && prettier --write ./src",
     "test": "nyc mocha --require ts-node/register test/*.spec.ts",
     "coverage": "nyc report --reporter=lcov",
     "es5": "rm -rf ./lib && tsc -p tsconfig.json",
@@ -37,6 +38,7 @@
     "chai": "^4.2.0",
     "coveralls": "^3.1.0",
     "eslint": "^7.4.0",
+    "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-prettier": "^3.1.4",
     "mocha": "^8.0.1",
