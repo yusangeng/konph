@@ -6,6 +6,7 @@
 
 import isUndefined from "lodash/isUndefined";
 import isFunction from "lodash/isFunction";
+import noop from "lodash/noop";
 import split from "./split";
 import {
   HasOnlyStringKey,
@@ -18,7 +19,6 @@ import {
 
 const { isArray } = Array;
 const { keys, defineProperty } = Object;
-function noop() {}
 
 /**
  * 配置值读取器.

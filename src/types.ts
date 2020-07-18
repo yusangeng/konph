@@ -4,7 +4,7 @@
  * @author yusangeng@outlook.com
  */
 
-type FNoop = () => void;
+type FNoop = (...args: any[]) => void;
 
 export type KVMap<V = any> = {
   [key: string]: V;
