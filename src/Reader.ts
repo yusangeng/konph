@@ -1,17 +1,24 @@
 /**
  * 配置值读取器.
  *
- * @author Y3G
+ * @author yusangeng@outlook.com
  */
 
-import isUndefined from 'lodash/isUndefined'
-import isFunction from 'lodash/isFunction'
-import split from './split'
-import { HasOnlyStringKey, KonphOptions, KonphGlobal, KonphCache, KonphItem, KonphPrivateItem } from './types'
+import isUndefined from "lodash/isUndefined";
+import isFunction from "lodash/isFunction";
+import split from "./split";
+import {
+  HasOnlyStringKey,
+  KonphOptions,
+  KonphGlobal,
+  KonphCache,
+  KonphItem,
+  KonphPrivateItem
+} from "./types";
 
-const { isArray } = Array
-const {  keys, defineProperty } = Object
-function noop () {}
+const { isArray } = Array;
+const { keys, defineProperty } = Object;
+function noop() {}
 
 /**
  * 配置值读取器.
@@ -20,11 +27,11 @@ function noop () {}
  * @private
  */
 export default class Reader<T extends HasOnlyStringKey<T>> {
-  private globalConf_: KonphGlobal<T>
-  private urlConf_: KonphGlobal<T>
-  private options_: KonphOptions<T>
-  private cache_: KonphCache<T>
-  private fitContext_: KonphGlobal<T>
+  private globalConf_: KonphGlobal<T>;
+  private urlConf_: KonphGlobal<T>;
+  private options_: KonphOptions<T>;
+  private cache_: KonphCache<T>;
+  private fitContext_: KonphGlobal<T>;
 
   /**
    * 构造函数.
@@ -35,22 +42,26 @@ export default class Reader<T extends HasOnlyStringKey<T>> {
    *
    * @memberof Reader
    */
-  constructor (globalConf: KonphGlobal<T>, url: string, options: KonphOptions<T>) {
-    this.globalConf_ = globalConf
-    this.urlConf_ = split<T>(url)
-    this.options_ = options
+  constructor(
+    globalConf: KonphGlobal<T>,
+    url: string,
+    options: KonphOptions<T>
+  ) {
+    this.globalConf_ = globalConf;
+    this.urlConf_ = split<T>(url);
+    this.options_ = options;
 
-    const cache: KonphCache<T> = this.cache_ = {}
-    const fitContext = this.fitContext_ = {}
+    const cache: KonphCache<T> = (this.cache_ = {});
+    const fitContext = (this.fitContext_ = {});
 
     keys(options).forEach(key => {
       const kk = key.toLowerCase().trim();
 
-      (cache as any)[kk] = noop
+      (cache as any)[kk] = noop;
       defineProperty(fitContext, kk, {
         get: () => this.item(kk as keyof T)
-      })
-    })
+      });
+    });
   }
 
   /**
@@ -62,40 +73,40 @@ export default class Reader<T extends HasOnlyStringKey<T>> {
    * @memberof Reader
    * @instance
    */
-  item<K extends keyof T> (key: K) : T[K] {
-    const kk = (typeof key === 'string' ? key.toLowerCase().trim() : key) as K
-    const cacheValue = this.cache_[kk]
+  item<K extends keyof T>(key: K): T[K] {
+    const kk = (typeof key === "string" ? key.toLowerCase().trim() : key) as K;
+    const cacheValue = this.cache_[kk];
 
     if (cacheValue !== noop) {
       // 命中缓存
-      return cacheValue as T[K]
+      return cacheValue as T[K];
     }
 
     // 当前项的配置
-    const item = this.options_[kk]
+    const item = this.options_[kk];
 
     if (!item) {
-      throw new Error(`Bad key: ${kk}.`)
+      throw new Error(`Bad key: ${kk}.`);
     }
 
     if ((item as KonphPrivateItem<T[K]>).__konph_private_item__) {
       // 私有配置
-      return (item as KonphPrivateItem<T[K]>).value
+      return (item as KonphPrivateItem<T[K]>).value;
     }
 
-    const { def, defaultValue, fit, deps } = item as KonphItem<T[K]>
+    const { def, defaultValue, fit, deps } = item as KonphItem<T[K]>;
 
     // url参数的优先级最高
-    let value = this.urlConf_[kk]
+    let value = this.urlConf_[kk];
 
     if (isUndefined(value)) {
       // 全局变量优先级次之
-      value = this.globalConf_[kk]
+      value = this.globalConf_[kk];
     }
 
     if (isUndefined(value)) {
       // 默认值优先级最低
-      value = isUndefined(def) ? defaultValue : def // defaultValue是def的老写法
+      value = isUndefined(def) ? defaultValue : def; // defaultValue是def的老写法
     }
 
     if (isFunction(fit)) {
@@ -104,26 +115,26 @@ export default class Reader<T extends HasOnlyStringKey<T>> {
 
       // 兼容老版本
       // 老版本不能自动分析依赖, 需要使用deps字段声明依赖
-      let depValues: Array<T[keyof T]> = []
+      let depValues: Array<T[keyof T]> = [];
 
       if (isArray(deps) && deps.length) {
         // 要计算当前配置项的值，首先读取它依赖的配置项
-        depValues = deps.map(dep => this.item(dep as keyof T))
+        depValues = deps.map(dep => this.item(dep as keyof T));
       }
 
       if (depValues.length) {
         // 老写法
         // 如果填写了deps, 同时fit函数是箭头函数, 则依赖分析不可用
-        value = fit.call(this.fitContext_, value, ...depValues)
+        value = fit.call(this.fitContext_, value, ...depValues);
       } else {
         // 新写法
         // 由于fit函数有通常是箭头函数, bind this无效，所以要使用第二个参数传递fitContext
-        value = fit.call(this.fitContext_, value, this.fitContext_)
+        value = fit.call(this.fitContext_, value, this.fitContext_);
       }
     }
 
-    this.cache_[kk] = value
+    this.cache_[kk] = value;
 
-    return value!
+    return value!;
   }
 }

@@ -1,9 +1,9 @@
 /**
  * 导出接口.
- * 
- * @author Y3G
+ *
+ * @author yusangeng@outlook.com
  */
 
-import konph from './konph'
+import konph from "./konph";
 
-export default konph
+export default konph;

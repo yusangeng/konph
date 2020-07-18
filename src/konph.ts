@@ -1,20 +1,27 @@
 /**
  * 前端配置读取工具.
- * 
- * @author Y3G
+ *
+ * @author yusangeng@outlook.com
  */
 
-import Reader from './Reader'
-import helper from './helper'
-import { HasOnlyStringKey, KonphInitData, KonphPrivateItem, KonphOptions, KonphResult, FKonph } from './types'
-import g from './global'
+import Reader from "./Reader";
+import helper from "./helper";
+import {
+  HasOnlyStringKey,
+  KonphInitData,
+  KonphPrivateItem,
+  KonphOptions,
+  KonphResult,
+  FKonph
+} from "./types";
+import g from "./global";
 
-function getSearch () : string {
+function getSearch(): string {
   try {
-    return g.location.search
+    return g.location.search;
   } catch (err) {
     // TODO: 兼容node命令行参数
-    return ''
+    return "";
   }
 }
 
@@ -29,48 +36,53 @@ function getSearch () : string {
  * @returns {KonphResult<T>} 配置读取结果, 格式为键值对.
  * @function
  */
-function getKonph<T extends HasOnlyStringKey<T>> (options: KonphOptions<T>,
-  name?: string | KonphInitData<T>) : KonphResult<T> {
-  let globalConf
-  let url
+function getKonph<T extends HasOnlyStringKey<T>>(
+  options: KonphOptions<T>,
+  name?: string | KonphInitData<T>
+): KonphResult<T> {
+  let globalConf;
+  let url;
 
-  if (!name || (typeof name === 'string' && !g[name])) {
-    name = '__Konph'
+  if (!name || (typeof name === "string" && !g[name])) {
+    name = "__Konph";
   }
 
-  if (typeof name === 'string') {
-    globalConf = g[name] || {}
-    url = getSearch()
+  if (typeof name === "string") {
+    globalConf = g[name] || {};
+    url = getSearch();
   } else {
-    globalConf = name.global || {}
-    url = name.url || ''
+    globalConf = name.global || {};
+    url = name.url || "";
   }
 
-  const reader = new Reader(globalConf, url, options)
+  const reader = new Reader(globalConf, url, options);
 
-  return Object.keys(options).map(key => key.trim().toLowerCase()).map(key => {
-    return { key, value: reader.item(key as keyof T) }
-  }).reduce((prev, el) => {
-    // fixme
-    (prev as any)[el.key] = el.value
-    return prev
-  }, {} as KonphResult<T>)
+  return Object.keys(options)
+    .map(key => key.trim().toLowerCase())
+    .map(key => {
+      return { key, value: reader.item(key as keyof T) };
+    })
+    .reduce((prev, el) => {
+      // fixme
+      (prev as any)[el.key] = el.value;
+      return prev;
+    }, {} as KonphResult<T>);
 }
 
-const prv = <T> (value: T) : KonphPrivateItem<T> => {
+const prv = <T>(value: T): KonphPrivateItem<T> => {
   return {
     __konph_private_item__: true,
     value
-  }
-}
+  };
+};
 
 const konph: FKonph = (() => {
-  const k: any = getKonph
+  const k: any = getKonph;
 
-  k.helper = helper
-  k.private = prv
+  k.helper = helper;
+  k.private = prv;
 
-  return k
-})()
+  return k;
+})();
 
-export default konph
+export default konph;

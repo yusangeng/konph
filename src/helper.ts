@@ -1,14 +1,14 @@
 /**
  * 帮助函数.
- * 
- * @author Y3G
+ *
+ * @author yusangeng@outlook.com
  */
 
-import isNumber from 'lodash/isNumber'
-import isBoolean from 'lodash/isBoolean'
-import isUndefined from 'lodash/isUndefined'
+import isNumber from "lodash/isNumber";
+import isBoolean from "lodash/isBoolean";
+import isUndefined from "lodash/isUndefined";
 
-const { isArray } = Array
+const { isArray } = Array;
 
 /**
  * 帮助函数, 可以通过Konph.helper访问.
@@ -40,17 +40,17 @@ const helper = {
      * @param {any} value 输入值.
      * @returns {boolean} 转换结果.
      */
-    boolean (value: any) : boolean {
-      if (value === 'false' || value === '0') {
-        return false
+    boolean(value: any): boolean {
+      if (value === "false" || value === "0") {
+        return false;
       }
 
-      return !!value
+      return !!value;
     },
 
     // 兼容老版本
-    bool (value: any) : boolean {
-      return helper.fit.boolean(value)
+    bool(value: any): boolean {
+      return helper.fit.boolean(value);
     },
 
     /**
@@ -61,25 +61,25 @@ const helper = {
      * @param {any} value 输入值.
      * @returns {number} 转换结果.
      */
-    number (value: any) : number {
-      if (typeof value === 'string') {
+    number(value: any): number {
+      if (typeof value === "string") {
         try {
-          return parseFloat(value)
+          return parseFloat(value);
         } catch (e) {
-          console.warn(`${value} is NOT a number.`)
-          return NaN
+          console.warn(`${value} is NOT a number.`);
+          return NaN;
         }
       }
 
       if (isNumber(value)) {
-        return value
+        return value;
       }
 
       if (isBoolean(value)) {
-        return value ? 1 : 0
+        return value ? 1 : 0;
       }
 
-      return NaN
+      return NaN;
     },
 
     /**
@@ -98,24 +98,27 @@ const helper = {
      * @param {any} value 输入值.
      * @returns {Array} 转换结果.
      */
-    array (value: any) : Array<any> {
+    array(value: any): Array<any> {
       if (isArray(value)) {
-        return value
+        return value;
       }
 
       if (isUndefined(value)) {
-        return []
+        return [];
       }
 
-      if (typeof value === 'string') {
-        let v = value.trim().replace(/^\[/, '').replace(/\]$/, '').trim()
-        const ret = v.split(',').map(el => el.trim()).filter(el => el !== '')
-        return ret
+      if (typeof value === "string") {
+        let v = value.trim().replace(/^\[/, "").replace(/\]$/, "").trim();
+        const ret = v
+          .split(",")
+          .map(el => el.trim())
+          .filter(el => el !== "");
+        return ret;
       }
 
-      return [value]
+      return [value];
     }
   }
-}
+};
 
-export default helper
+export default helper;
