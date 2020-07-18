@@ -43,3 +43,4 @@ packinfo.js
 lib
 doc
 package-lock.json
+yarn.lock
