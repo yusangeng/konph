@@ -14,11 +14,10 @@ import {
   KonphResult,
   FKonph
 } from "./types";
-import g from "./global";
 
 function getSearch(): string {
   try {
-    return g.location.search;
+    return globalThis.location.search;
   } catch (err) {
     // TODO: 兼容node命令行参数
     return "";
