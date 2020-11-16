@@ -15,9 +15,11 @@ import {
   FKonph
 } from "./types";
 
+const DEFAULT_GLOBAL_NAME = "__Konph";
+
 function getSearch(): string {
   try {
-    return globalThis.location.search;
+    return (globalThis as any).location.search;
   } catch (err) {
     // TODO: 兼容node命令行参数
     return "";
@@ -41,17 +43,18 @@ function getKonph<T extends HasOnlyStringKey<T>>(
 ): KonphResult<T> {
   let globalConf;
   let url;
+  const g: any = globalThis;
 
   if (!name || (typeof name === "string" && !g[name])) {
-    name = "__Konph";
+    name = DEFAULT_GLOBAL_NAME;
   }
 
   if (typeof name === "string") {
-    globalConf = g[name] || {};
+    globalConf = g[name] ?? {};
     url = getSearch();
   } else {
-    globalConf = name.global || {};
-    url = name.url || "";
+    globalConf = name.global ?? {};
+    url = name.url ?? "";
   }
 
   const reader = new Reader(globalConf, url, options);

@@ -83,7 +83,7 @@ const helper = {
     },
 
     /**
-     * 转换为数组.
+     * 转换为字符串列表.
      *
      * 如果是数组直接返回, 如果是字符串, 执行以下操作:
      *   1. 首先trim.
@@ -98,9 +98,9 @@ const helper = {
      * @param {any} value 输入值.
      * @returns {Array} 转换结果.
      */
-    array(value: any): Array<any> {
+    strings(value: any): string[] {
       if (isArray(value)) {
-        return value;
+        return value.map(el => "" + el);
       }
 
       if (isUndefined(value)) {
@@ -117,6 +117,11 @@ const helper = {
       }
 
       return [value];
+    },
+
+    // 兼容老版本
+    array(value: any): any[] {
+      return helper.fit.strings(value);
     }
   }
 };
