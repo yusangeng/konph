@@ -56,7 +56,7 @@ function getKonph<T extends HasOnlyStringKey<T>>(
 
   const reader = new Reader(globalConf, url, options);
 
-  return Object.keys(options)
+  const ret = Object.keys(options)
     .map(key => key.trim().toLowerCase())
     .map(key => {
       return { key, value: reader.item(key as keyof T) };
@@ -66,6 +66,8 @@ function getKonph<T extends HasOnlyStringKey<T>>(
       (prev as any)[el.key] = el.value;
       return prev;
     }, {} as KonphResult<T>);
+  
+  return ret
 }
 
 const prv = <T>(value: T): KonphPrivateItem<T> => {
