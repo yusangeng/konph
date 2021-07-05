@@ -4,18 +4,16 @@
  * @author yusangeng@outlook.com
  */
 
-import { KonphGlobal, KVMap } from "./types";
+import { KonphGlobal } from "./types";
 
 /**
  * 将url参数分割为键值对.
  *
  * @param {string} url search部分, 可以通过window.location.search取得.
- * @returns {KVMap} url参数表.
+ * @returns {KonphGlobal<T>} url参数表.
  * @private
  */
-export default function split<T extends KVMap>(
-  searchStr: string
-): KonphGlobal<T> {
+export default function split<T extends Record<string, any>>(searchStr: string): KonphGlobal<T> {
   const segments = searchStr.replace(/^\?/, "").split("&");
 
   return segments
@@ -34,7 +32,7 @@ export default function split<T extends KVMap>(
     })
     .reduce((prev, el) => {
       if (el) {
-        prev[el.key] = el.value;
+        prev[el.key as keyof T] = el.value as any;
       }
 
       return prev;

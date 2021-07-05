@@ -6,10 +6,6 @@
 
 type FNoop = (...args: any[]) => void;
 
-export type KVMap<V = any> = {
-  [key: string]: V;
-};
-
 export type HasOnlyStringKey<T> = {
   [K in keyof T]: T[K];
 } & {

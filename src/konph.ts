@@ -17,7 +17,7 @@ import {
 
 function getSearch(): string {
   try {
-    return globalThis.location.search;
+    return (globalThis as any).location.search;
   } catch (err) {
     // TODO: 兼容node命令行参数
     return "";
@@ -42,12 +42,12 @@ function getKonph<T extends HasOnlyStringKey<T>>(
   let globalConf;
   let url;
 
-  if (!name || (typeof name === "string" && !g[name])) {
+  if (!name || (typeof name === "string" && !(globalThis as any)[name])) {
     name = "__Konph";
   }
 
   if (typeof name === "string") {
-    globalConf = g[name] || {};
+    globalConf = (globalThis as any)[name] || {};
     url = getSearch();
   } else {
     globalConf = name.global || {};

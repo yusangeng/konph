@@ -55,7 +55,7 @@ describe('helper.fit', () => {
     })
   })
 
-  describe('#array', () => {
+  describe('#strings', () => {
     it('should NOT throw error.', done => {
       fit.array(void 0)
       fit.array(null)

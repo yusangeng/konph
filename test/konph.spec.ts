@@ -2,11 +2,10 @@
 
 import chai from 'chai'
 import konph from '../src/konph'
-import { KVMap } from '../src/types'
 
 chai.should()
 
-function createConf (HOST: string, G: KVMap, URL: string) : KVMap {
+function createConf (HOST: string, G: any, URL: string) : any {
   const config = konph({
     'is-private': konph.private(123),
     'is-daily': {
@@ -31,7 +30,7 @@ function createConf (HOST: string, G: KVMap, URL: string) : KVMap {
     'rpc-prefix': {
       def: '',
 
-      fit: (v: string, ctx: KVMap) => {
+      fit: (v: string, ctx: any) => {
         if (v !== null && typeof v !== 'undefined') {
           let u = '' + v
 
@@ -63,7 +62,7 @@ function createConf (HOST: string, G: KVMap, URL: string) : KVMap {
 
     'rpc-ver': {
       def: '1.0.0',
-      fit: (v: string, ctx: KVMap) => {
+      fit: (v: string, ctx: any) => {
         const vv = '' + v
         if (ctx['is-dev'] && /\d$/.test(vv)) {
           return vv + '.dev'
@@ -83,7 +82,7 @@ function createConf (HOST: string, G: KVMap, URL: string) : KVMap {
     url: URL
   } as any)
 
-  return config as KVMap
+  return config as any
 }
 
 describe('konph', () => {
