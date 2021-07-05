@@ -7,9 +7,7 @@
 type FNoop = (...args: any[]) => void;
 
 export type HasOnlyStringKey<T> = {
-  [K in keyof T]: T[K];
-} & {
-  [otherKey: number]: never;
+  [K in keyof T]: K extends string ? T[K] : never;
 };
 
 export type KonphGlobal<T> = {
@@ -37,8 +35,13 @@ export type KonphPrivateItem<V> = {
   value: V;
 };
 
+export type KonphValueItem<V> = V;
+
 export type KonphOptions<T extends HasOnlyStringKey<T>> = {
-  [K in keyof T]: KonphItem<T[K]> | KonphPrivateItem<T[K]>;
+  [K in keyof T]:
+    | KonphItem<T[K]>
+    | KonphPrivateItem<T[K]>
+    | KonphValueItem<T[K]>;
 };
 
 export type KonphResult<T> = {
@@ -57,7 +60,7 @@ export type FKonph = {
       number: (value: any) => number;
       string: (value: any) => string;
       bool: (value: any) => boolean;
-      array: (value: any) => any[];
+      strings: (value: any) => string[];
     };
   };
   private: FPrivate;

@@ -85,8 +85,12 @@ export default class Reader<T extends HasOnlyStringKey<T>> {
     // 当前项的配置
     const item = this.options_[kk];
 
-    if (!item) {
+    if (typeof item === "undefined" || item === null) {
       throw new Error(`Bad key: ${kk}.`);
+    }
+
+    if (["string", "number", "boolean"].includes(typeof item)) {
+      return item as any;
     }
 
     if ((item as KonphPrivateItem<T[K]>).__konph_private_item__) {

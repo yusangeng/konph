@@ -15,6 +15,8 @@ import {
   FKonph
 } from "./types";
 
+const DEFAULT_GLOBAL_NAME = "__Konph";
+
 function getSearch(): string {
   try {
     return (globalThis as any).location.search;
@@ -41,17 +43,18 @@ function getKonph<T extends HasOnlyStringKey<T>>(
 ): KonphResult<T> {
   let globalConf;
   let url;
+  const g: any = globalThis;
 
-  if (!name || (typeof name === "string" && !(globalThis as any)[name])) {
-    name = "__Konph";
+  if (!name || (typeof name === "string" && !g[name])) {
+    name = DEFAULT_GLOBAL_NAME;
   }
 
   if (typeof name === "string") {
-    globalConf = (globalThis as any)[name] || {};
+    globalConf = g[name] ?? {};
     url = getSearch();
   } else {
-    globalConf = name.global || {};
-    url = name.url || "";
+    globalConf = name.global ?? {};
+    url = name.url ?? "";
   }
 
   const reader = new Reader(globalConf, url, options);
