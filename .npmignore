@@ -6,3 +6,4 @@ yarn.lock
 .gitignore
 .travis.yml
 tsconfig.json
+.github
