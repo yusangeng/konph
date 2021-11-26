@@ -75,7 +75,7 @@ export default class Reader<T extends HasOnlyStringKey<T>> {
    */
   item<K extends keyof T>(key: K): T[K] {
     const kk = (typeof key === "string" ? key.toLowerCase().trim() : key) as K;
-    const cacheValue = this.cache_[kk];
+    const cacheValue = this.cache_[kk] ?? noop;
 
     if (cacheValue !== noop) {
       // 命中缓存
@@ -90,7 +90,7 @@ export default class Reader<T extends HasOnlyStringKey<T>> {
     }
 
     if (["string", "number", "boolean"].includes(typeof item)) {
-      return item as any;
+      return item as T[K];
     }
 
     if ((item as KonphPrivateItem<T[K]>).__konph_private_item__) {
