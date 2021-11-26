@@ -57,6 +57,12 @@ function getKonph<T extends HasOnlyStringKey<T>>(
     url = name.url ?? "";
   }
 
+  // 环境变量会被全局变量覆盖
+  if (process) {
+    const { env = {} } = process;
+    globalConf = { ...env, ...globalConf };
+  }
+
   const reader = new Reader(globalConf, url, options);
 
   const ret = Object.keys(options)
