@@ -13,7 +13,9 @@ import { KonphGlobal } from "./types";
  * @returns {KonphGlobal<T>} url参数表.
  * @private
  */
-export default function split<T extends Record<string, string>>(searchStr: string): KonphGlobal<T> {
+export default function split<T extends Record<string, string>>(
+  searchStr: string
+): KonphGlobal<T> {
   const segments = searchStr.replace(/^\?/, "").split("&");
 
   return segments

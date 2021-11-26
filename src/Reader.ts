@@ -57,7 +57,7 @@ export default class Reader<T extends HasOnlyStringKey<T>> {
     keys(options).forEach(key => {
       const kk = key.toLowerCase().trim();
 
-      (cache as any)[kk] = noop;
+      (cache as Record<string, unknown>)[kk] = noop;
       defineProperty(fitContext, kk, {
         get: () => this.item(kk as keyof T)
       });
@@ -139,6 +139,6 @@ export default class Reader<T extends HasOnlyStringKey<T>> {
 
     this.cache_[kk] = value;
 
-    return value!;
+    return value as T[K];
   }
 }
