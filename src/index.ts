@@ -5,5 +5,7 @@
  */
 
 import konph from "./konph";
+import { KonphGlobal } from "./types";
 
+export { KonphGlobal };
 export default konph;
