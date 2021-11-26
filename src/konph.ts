@@ -69,8 +69,8 @@ function getKonph<T extends HasOnlyStringKey<T>>(
       (prev as any)[el.key] = el.value;
       return prev;
     }, {} as KonphResult<T>);
-  
-  return ret
+
+  return ret;
 }
 
 const prv = <T>(value: T): KonphPrivateItem<T> => {
