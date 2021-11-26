@@ -44,3 +44,6 @@ lib
 doc
 package-lock.json
 yarn.lock
+cjs
+esm
+types
