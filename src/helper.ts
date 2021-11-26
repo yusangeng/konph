@@ -63,12 +63,20 @@ const helper = {
      */
     number(value: any): number {
       if (typeof value === "string") {
-        try {
-          return parseFloat(value);
-        } catch (e) {
+        if (value === "true") {
+          return 1;
+        } else if (value === "false") {
+          return 0;
+        }
+
+        const n = parseFloat(value);
+
+        if (isNaN(n)) {
           console.warn(`${value} is NOT a number.`);
           return NaN;
         }
+
+        return n;
       }
 
       if (isNumber(value)) {
