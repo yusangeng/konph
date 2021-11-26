@@ -42,6 +42,69 @@ describe("Reader", () => {
       done();
     });
 
+    it("def.", done => {
+      const rd = new Reader({}, "", {
+        a: {
+          def: 0,
+          fit: helper.fit.number
+        },
+
+        b: {
+          defaultValue: false,
+          fit: helper.fit.boolean
+        }
+      });
+
+      rd.item("a").should.to.be.equal(0);
+      rd.item("b").should.to.be.equal(false);
+
+      done();
+    });
+
+    it("primitive item.", done => {
+      const rd = new Reader(
+        {
+          a: 1,
+          b: true
+        },
+        "?a=2&b=0",
+        {
+          a: 3,
+          b: {
+            fit: helper.fit.boolean
+          }
+        }
+      );
+
+      rd.item("a").should.to.be.equal(3);
+
+      done();
+    });
+
+    it("bad key.", done => {
+      const rd = new Reader(
+        {
+          a: 1,
+          b: true
+        },
+        "?a=3&b=0",
+        {
+          a: {
+            def: 0,
+            fit: helper.fit.number
+          },
+
+          b: {
+            fit: helper.fit.boolean
+          }
+        }
+      );
+
+      (() => rd.item("c" as any)).should.throw();
+
+      done();
+    });
+
     it("deps old.", done => {
       const rd = new Reader(
         {

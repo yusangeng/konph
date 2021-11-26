@@ -1,6 +1,7 @@
 /* global describe it */
 
 import chai from "chai";
+import { eq } from "lodash";
 import konph from "../src/konph";
 
 chai.should();
@@ -116,6 +117,39 @@ describe("konph", () => {
       cf["rpc-prefix"].should.to.be.equal("//prefix.konph.com/");
       cf["rpc-ver"].should.to.be.equal("1.2.3.dev");
       cf["rpc-use-tunnel"].should.to.be.equal(true);
+      done();
+    });
+
+    it("global.", done => {
+      (globalThis as any).__Konph = {
+        a: "aa"
+      };
+
+      const config = konph({ a: { def: "a" } });
+
+      config.a.should.be.eq("aa");
+      done();
+    });
+
+    it("default global name.", done => {
+      (globalThis as any).__Konph = {
+        a: "aa"
+      };
+
+      const config = konph({ a: { def: "a" } }, "x");
+
+      config.a.should.be.eq("aa");
+      done();
+    });
+
+    it("url search.", done => {
+      (globalThis as any).location = {
+        search: "?a=aa"
+      };
+
+      const config = konph({ a: { def: "a" } });
+
+      config.a.should.be.eq("aa");
       done();
     });
   });

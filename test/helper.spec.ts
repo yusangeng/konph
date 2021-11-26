@@ -38,6 +38,15 @@ describe("helper.fit", () => {
       done();
     });
 
+    it("should be 1 or 0.", done => {
+      fit.number(true).should.be.eq(1);
+      fit.number(false).should.be.eq(0);
+      fit.number("true").should.be.eq(1);
+      fit.number("false").should.be.eq(0);
+
+      done();
+    });
+
     it("should be -1.123.", done => {
       const n = -1.123;
 
@@ -55,12 +64,12 @@ describe("helper.fit", () => {
     });
   });
 
-  describe('#strings', () => {
-    it('should NOT throw error.', done => {
-      fit.array(void 0)
-      fit.array(null)
-      done()
-    })
+  describe("#strings", () => {
+    it("should NOT throw error.", done => {
+      fit.array(void 0);
+      fit.array(null);
+      done();
+    });
 
     it("should be []", done => {
       fit.strings(void 0).should.to.deep.equal([]);
