@@ -1,6 +1,6 @@
 {
   "name": "konph",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "前端配置管理工具.",
   "main": "lib/index.js",
   "jsnext:main": "src/index.js",
