@@ -7,3 +7,5 @@ yarn.lock
 .travis.yml
 tsconfig.json
 .github
+src
+test
