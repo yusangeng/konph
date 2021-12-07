@@ -1,7 +1,6 @@
 /* global describe it */
 
 import chai from "chai";
-import { eq } from "lodash";
 import konph from "../src/konph";
 
 chai.should();
