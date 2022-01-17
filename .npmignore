@@ -6,7 +6,12 @@ yarn.lock
 package-lock.json
 .gitignore
 .travis.yml
+.eslintrc.js
+.prettierrc
 tsconfig.json
+tsconfig.cjs.json
+tsconfig.esm.json
+.mocharc.json
 .github
 src
 test
