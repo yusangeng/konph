@@ -4,7 +4,6 @@
   "node-option": [
     "experimental-specifier-resolution=node",
     "experimental-loader=ts-node/esm",
-    "experimental-modules=true",
     "no-warnings"
   ],
 
