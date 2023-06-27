@@ -86,7 +86,7 @@ export default class Reader<T extends HasOnlyStringKey<T>> {
     const item = this.options_[kk];
 
     if (typeof item === "undefined" || item === null) {
-      throw new Error(`Bad key: ${kk}.`);
+      throw new Error(`Bad key: ${String(kk)}.`);
     }
 
     if (["string", "number", "boolean"].includes(typeof item)) {
