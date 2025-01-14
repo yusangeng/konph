@@ -1,6 +1,10 @@
 /**
- * 前端配置读取工具.
+ * 前端配置管理工具的核心实现模块.
+ * 
+ * 提供从多种来源（环境变量、URL参数、全局变量）读取配置的能力，
+ * 并支持配置项的依赖关系和值转换。
  *
+ * @packageDocumentation
  * @author yusangeng@outlook.com
  */
 
@@ -17,6 +21,12 @@ import {
 
 const DEFAULT_GLOBAL_NAME = "__Konph";
 
+/**
+ * 获取当前URL的查询字符串
+ * 
+ * @returns 当前URL的查询字符串
+ * @private
+ */
 function getSearch(): string {
   try {
     return (globalThis as any).location.search;
@@ -79,18 +89,40 @@ function getKonph<T extends HasOnlyStringKey<T>>(
   return ret;
 }
 
-const prv = <T>(value: T): KonphPrivateItem<T> => {
+/**
+ * 创建私有配置项
+ * 
+ * @param value - 配置项的值
+ * @returns 私有配置项对象
+ * @private
+ */
+const privateItem = <T>(value: T): KonphPrivateItem<T> => {
   return {
     __konph_private_item__: true,
     value
   };
 };
 
+/**
+ * 配置管理器的工厂函数
+ * 
+ * @remarks
+ * 该函数是getKonph的增强版本，附加了helper工具和private方法
+ * 
+ * @example
+ * // 使用private方法创建私有配置
+ * const config = konph({
+ *   secret: konph.private({
+ *     default: 'my-secret',
+ *     env: 'APP_SECRET'
+ *   })
+ * });
+ */
 const konph: FKonph = (() => {
   const k: any = getKonph;
 
   k.helper = helper;
-  k.private = prv;
+  k.private = privateItem;
 
   return k;
 })();

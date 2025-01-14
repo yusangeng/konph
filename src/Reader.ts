@@ -1,6 +1,10 @@
 /**
- * 配置值读取器.
+ * 配置值读取器的核心实现类.
+ * 
+ * 负责从不同来源（URL参数、全局变量）读取配置值，
+ * 并处理配置项之间的依赖关系和值转换。
  *
+ * @packageDocumentation
  * @author yusangeng@outlook.com
  */
 
@@ -27,10 +31,34 @@ const { keys, defineProperty } = Object;
  * @private
  */
 export default class Reader<T extends HasOnlyStringKey<T>> {
+  /**
+   * 全局配置存储
+   * @private
+   */
   private globalConf_: KonphGlobal<T>;
+
+  /**
+   * URL参数解析后的配置存储
+   * @private
+   */
   private urlConf_: KonphGlobal<T>;
+
+  /**
+   * 配置项定义
+   * @private
+   */
   private options_: KonphOptions<T>;
+
+  /**
+   * 配置值缓存
+   * @private
+   */
   private cache_: KonphCache<T>;
+
+  /**
+   * fit函数的执行上下文
+   * @private
+   */
   private fitContext_: KonphGlobal<T>;
 
   /**

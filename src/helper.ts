@@ -1,6 +1,10 @@
 /**
- * 帮助函数.
+ * 配置管理工具的辅助函数模块.
+ * 
+ * 提供常用的值转换函数，用于配置项的值处理。
+ * 可以通过konph.helper.git访问这些工具函数。
  *
+ * @packageDocumentation
  * @author yusangeng@outlook.com
  */
 
@@ -25,7 +29,7 @@ const helper = {
    * {
    *   foobar: {
    *     def: true,
-   *     fit: Konph.helper.fit.boolean // 将任何值转换为布尔值
+   *     fit: konph.helper.fit.boolean // 将任何值转换为布尔值
    *   }
    * }
    *

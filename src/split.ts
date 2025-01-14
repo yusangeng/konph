@@ -1,6 +1,15 @@
 /**
- * url参数分割.
+ * URL参数解析模块.
+ * 
+ * 负责将URL查询字符串解析为键值对格式，
+ * 用于从URL参数中读取配置。
+ * 
+ * @example
+ * // 使用示例
+ * const urlParams = split('?apiUrl=https://api.example.com&timeout=5000');
+ * // 返回 { apiurl: 'https://api.example.com', timeout: '5000' }
  *
+ * @packageDocumentation
  * @author yusangeng@outlook.com
  */
 
