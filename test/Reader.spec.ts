@@ -8,16 +8,16 @@ chai.should();
 
 type KVMap = Record<string, any>;
 
-describe("Reader", () => {
-  describe("#constructor", () => {
-    it("should NOT throw error.", done => {
+describe("Reader - configuration reader", () => {
+  describe("#constructor - initialization", () => {
+    it("should not throw error when initialized with empty parameters", done => {
       void new Reader({}, "", {});
       done();
     });
   });
 
   describe("#item", () => {
-    it("basic usage.", done => {
+    it("should read values from URL params with higher priority than global values", done => {
       const rd = new Reader(
         {
           a: 1,
@@ -42,7 +42,7 @@ describe("Reader", () => {
       done();
     });
 
-    it("def.", done => {
+    it("should use default values when no value provided in global or URL params", done => {
       const rd = new Reader({}, "", {
         a: {
           def: 0,
@@ -61,7 +61,7 @@ describe("Reader", () => {
       done();
     });
 
-    it("primitive item.", done => {
+    it("should handle primitive config items without fit functions", done => {
       const rd = new Reader(
         {
           a: 1,
@@ -81,7 +81,7 @@ describe("Reader", () => {
       done();
     });
 
-    it("bad key.", done => {
+    it("should throw error when accessing non-existent config key", done => {
       const rd = new Reader(
         {
           a: 1,
@@ -105,7 +105,7 @@ describe("Reader", () => {
       done();
     });
 
-    it("deps old.", done => {
+    it("should handle dependencies using explicit dependency array", done => {
       const rd = new Reader(
         {
           a: 1,
@@ -141,7 +141,7 @@ describe("Reader", () => {
       done();
     });
 
-    it("deps via this.", done => {
+    it("should handle dependencies using 'this' context", done => {
       const rd = new Reader(
         {
           a: 1,
@@ -178,7 +178,7 @@ describe("Reader", () => {
       done();
     });
 
-    it("deps via fitContext.", done => {
+    it("should handle dependencies using fit context parameter", done => {
       const rd = new Reader(
         {
           a: 1,

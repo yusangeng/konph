@@ -92,9 +92,9 @@ function createConf(HOST: string, G: KVMap, URL: string): KVMap {
   return config as KVMap;
 }
 
-describe("konph", () => {
-  describe("#konph", () => {
-    it("basic usage.", done => {
+describe("konph - configuration management", () => {
+  describe("#konph - basic functionality", () => {
+    it("should merge config values from global and URL params with URL params taking precedence", done => {
       const cf = createConf(
         "prod.konph.com",
         {
@@ -119,7 +119,7 @@ describe("konph", () => {
       done();
     });
 
-    it("global.", done => {
+    it("should read config values from global __Konph object", done => {
       (globalThis as any).__Konph = {
         a: "aa"
       };
@@ -130,7 +130,7 @@ describe("konph", () => {
       done();
     });
 
-    it("default global name.", done => {
+    it("should use default global name __Konph when no custom name provided", done => {
       (globalThis as any).__Konph = {
         a: "aa"
       };
@@ -141,7 +141,7 @@ describe("konph", () => {
       done();
     });
 
-    it("url search.", done => {
+    it("should read config values from URL search params", done => {
       (globalThis as any).location = {
         search: "?a=aa"
       };

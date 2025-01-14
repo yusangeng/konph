@@ -5,14 +5,14 @@ import split from '../src/split'
 
 chai.should()
 
-describe('split', () => {
-  describe('#split', () => {
-    it('should NOT throw error.', done => {
+describe('split - URL query string parsing', () => {
+  describe('#split - basic functionality', () => {
+    it('should not throw error when parsing valid query string', done => {
       split('?a=1&b=2&c=qwerty')
       done()
     })
 
-    it('should output right data.', done => {
+    it('should correctly parse query string into key-value pairs', done => {
       const obj = split('?a=1&b=2&c=qwerty')
 
       obj.should.to.deep.equal({
@@ -24,7 +24,7 @@ describe('split', () => {
       done()
     })
 
-    it('should be equal.', done => {
+    it('should handle different query string formats consistently', done => {
       const arr = [
         '?a=1&b=2&c=qwerty',
         'a=1&b=2&c=qwerty',
