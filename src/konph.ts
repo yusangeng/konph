@@ -58,7 +58,7 @@ function getKonph<T extends HasOnlyStringKey<T>>(
   }
 
   // 环境变量会被全局变量覆盖
-  if (process) {
+  if (typeof process !== "undefined") {
     const { env = {} } = process;
     globalConf = { ...env, ...globalConf };
   }
