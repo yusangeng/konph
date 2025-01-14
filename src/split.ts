@@ -34,14 +34,14 @@ export default function split<T extends Record<string, string>>(
 
     return segments
       .map(el => {
-        let [key, value] = el.split("=", 2);
+        const pair = el.split("=", 2);
+        let [key, value] = pair;
 
-        key = key.trim().toLowerCase(); // 不分大小写
-
-        if (!key.length) {
+        if (pair.length < 2 || !key.length) {
           return void 0;
         }
 
+        key = key.trim().toLowerCase(); // 不分大小写
         value = decodeURIComponent(value || "").trim(); // value忽略两端空格
 
         return { key, value };
