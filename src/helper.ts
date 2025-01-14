@@ -120,7 +120,7 @@ const helper = {
       }
 
       if (typeof value === "string") {
-        const v = value.trim().replace(/^\[/, "").replace(/\]$/, "").trim();
+        const v = value.trim().replace(/^\[|\]$/g, "").trim();
         const ret = v
           .split(",")
           .map(el => el.trim())
