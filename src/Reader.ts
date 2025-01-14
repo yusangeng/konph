@@ -13,12 +13,12 @@ import isFunction from "lodash/isFunction";
 import noop from "lodash/noop";
 import split from "./split";
 import {
-  HasOnlyStringKey,
-  KonphOptions,
-  KonphGlobal,
-  KonphCache,
-  KonphItem,
-  KonphPrivateItem
+  type HasOnlyStringKey,
+  type KonphOptions,
+  type KonphGlobal,
+  type KonphCache,
+  type KonphItem,
+  type KonphPrivateItem
 } from "./types";
 
 const { isArray } = Array;

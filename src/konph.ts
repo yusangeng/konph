@@ -11,12 +11,12 @@
 import Reader from "./Reader";
 import helper from "./helper";
 import {
-  HasOnlyStringKey,
-  KonphInitData,
-  KonphPrivateItem,
-  KonphOptions,
-  KonphResult,
-  FKonph
+  type HasOnlyStringKey,
+  type KonphInitData,
+  type KonphPrivateItem,
+  type KonphOptions,
+  type KonphResult,
+  type FKonph
 } from "./types";
 
 const DEFAULT_GLOBAL_NAME = "__Konph";
