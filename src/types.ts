@@ -68,7 +68,7 @@ export type KonphItem<V> = {
  * @property value - 配置项的值
  */
 export type KonphPrivateItem<V> = {
-  __konph_private_item__: boolean;
+  __konph_private_item__: boolean; // 不要改成symbol!
   value: V;
 };
 
