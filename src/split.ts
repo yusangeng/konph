@@ -25,27 +25,37 @@ import { KonphGlobal } from "./types";
 export default function split<T extends Record<string, string>>(
   searchStr: string
 ): KonphGlobal<T> {
-  const segments = searchStr.replace(/^\?/, "").split("&");
+  if (!searchStr || searchStr === "?") {
+    return {} as KonphGlobal<T>;
+  }
 
-  return segments
-    .map(el => {
-      let [key, value] = el.split("=", 2);
+  try {
+    const segments = searchStr.replace(/^\?/, "").split("&");
 
-      key = key.trim().toLowerCase(); // 不分大小写
+    return segments
+      .map(el => {
+        let [key, value] = el.split("=", 2);
 
-      if (!key.length) {
-        return void 0;
-      }
+        key = key.trim().toLowerCase(); // 不分大小写
 
-      value = decodeURIComponent(value || "").trim(); // value忽略两端空格
+        if (!key.length) {
+          return void 0;
+        }
 
-      return { key, value };
-    })
-    .reduce((prev, el) => {
-      if (el) {
-        prev[el.key as keyof T] = el.value as any;
-      }
+        value = decodeURIComponent(value || "").trim(); // value忽略两端空格
 
-      return prev;
-    }, {} as KonphGlobal<T>);
+        return { key, value };
+      })
+      .reduce((prev, el) => {
+        if (el) {
+          prev[el.key as keyof T] = el.value as any;
+        }
+
+        return prev;
+      }, {} as KonphGlobal<T>);
+
+  } catch (error) {
+    console.warn("Error parsing URL parameters:", error);
+    return {} as KonphGlobal<T>;
+  }
 }
