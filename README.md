@@ -90,10 +90,10 @@ const config = konph({
 
 ### 配置项之间的依赖关系
 
+配置项之间可以互相依赖, fit 函数通过 this 指针或者 context 入参, 可以访问到其他配置项. konph会自动处理依赖关系, 先读取被依赖的配置项. 但是 konph 不会做循环引用检查.
+
 ```js
 import konph from "konph";
-
-配置项之间可以互相依赖, fit 函数通过 this 指针或者 context 入参, 可以访问到其他配置项. konph会自动处理依赖关系, 先读取被依赖的配置项. 但是 konph 不会做循环引用检查.
 
 const config = konph({
   love: {
